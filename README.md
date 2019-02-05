@@ -113,6 +113,9 @@ You should proceed with the following changes:
 
 # How to configure an IPA client
 
+Remember to set a password for the root user, otherwise when you will have
+configured LDAP authentication you can't access to the VM using Vagrant anymore.
+
 Configure LDAP authentication in the following way:
 
     [root@ipaclient ~]# yum install -y openldap-clients nss-pam-ldapd
