@@ -2,6 +2,9 @@
 
 This vagrantfile can create a basic IPA server useful to emulate an RHCSA test.
 
+Not all the steps can be automated in this moment, so you will need to proceed
+manually for certain things.
+
 ## How to start the vm
 
     vagrant up
@@ -101,7 +104,8 @@ procedure:
 
 ## How to add credentials to the IPA server
 
-This row should be where you are running vagrant and the browser:
+This row should be in the hosts file where you are running vagrant and the
+browser:
 
     192.168.33.10 ipaserver.example.com
 
@@ -115,6 +119,7 @@ You should proceed with the following changes:
 
 Remember to set a password for the root user, otherwise when you will have
 configured LDAP authentication you can't access to the VM using Vagrant anymore.
+This will not be needed in the exam.
 
 Configure LDAP authentication in the following way:
 
@@ -134,6 +139,9 @@ Try authenticating with an user:
     total 12
     drwx------. 2 leonardo leonardo  62 Feb  5 22:07 .
 
+# How to configure autofs to automatically mount home directories
+
+TBD
 
 ## References
 
