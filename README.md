@@ -5,12 +5,28 @@ This vagrantfile can create a basic IPA server useful to emulate an RHCSA test.
 Not all the steps can be automated in this moment, so you will need to proceed
 manually for certain things.
 
-## How to start the vm
+## How to configure it
 
     vagrant up
-    vagrant ssh
 
-You can login to the IPA server with 'admin' and password 'adminipa'.
+The first time you start the VM it will upgrade all the packages. You need to
+restart the VM with vagrant otherwise the IPA installation won't work.
+
+    vagrant reload
+
+You can then install IPA using:
+
+    vagrant ssh
+    $ sudo -i
+    # bash /vagrant/install_ipa.sh
+
+This row should be in the hosts file where you are running vagrant and the
+browser:
+
+    192.168.33.10 ipaserver.example.com
+
+You can login to the IPA server with 'admin' and password 'adminipa' using
+http://ipaserver.example.com.
 
 ## Manual procedure
 
@@ -111,16 +127,10 @@ procedure:
 
 ## How to add credentials to the IPA server
 
-This row should be in the hosts file where you are running vagrant and the
-browser:
-
-    192.168.33.10 ipaserver.example.com
-
 You should proceed with the following changes:
 
 1. add a new host with the address 192.168.33.11 named ipaclient.example.com
 2. add a new user as you like
-
 
 # How to configure an IPA client
 

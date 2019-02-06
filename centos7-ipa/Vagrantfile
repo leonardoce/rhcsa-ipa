@@ -17,7 +17,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", inline: <<-SHELL
-      echo 'provaleonardo' | passwd vagrant --stdin
+      set -x
+
+      # Create a fallback sudo user with a password
+      useradd -m usersudo
+      usermod -aG wheel usersudo
+      echo '%wheel	ALL=(ALL:ALL) ALL' >> /etc/sudoers
+      echo 'usersudo' | passwd --stdin usersudo
+      cp /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
+      sed 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config.orig > /etc/ssh/sshd_config
 
       cat > /etc/hosts <<EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -25,13 +33,8 @@ Vagrant.configure("2") do |config|
 192.168.33.10 ipaserver.example.com ipaserver
 EOF
 
-      yum update -y
+      # yum update -y
       yum install -y ipa-server bind bind-dyndb-ldap ipa-server-dns
-
-      # Install IPA Server
-      ipa-server-install -p mypassword -a adminipa -n example.com -r EXAMPLE.COM \
-        --setup-kra --setup-dns --forwarder=8.8.8.8 --hostname=ipaserver.example.com \
-        --auto-reverse -U
 
       # NFS Server setup
       yum install -y nfs-utils
