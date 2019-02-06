@@ -130,7 +130,7 @@ This will not be needed in the exam.
 
 Configure LDAP authentication in the following way:
 
-    yum install -y openldap-clients nss-pam-ldapd
+    yum install -y openldap-clients nss-pam-ldapd sssd
     [...]
     
     authconfig --enableforcelegacy --update
