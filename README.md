@@ -130,13 +130,17 @@ This will not be needed in the exam.
 
 Configure LDAP authentication in the following way:
 
-    [root@ipaclient ~]# yum install -y openldap-clients nss-pam-ldapd
+    yum install -y openldap-clients nss-pam-ldapd
     [...]
     
-    [root@ipaclient ~]# authconfig --enableforcelegacy --update
-    [root@ipaclient ~]# authconfig --enableldap --enableldapauth --ldapserver="ipaserver.example.com" --ldapbasedn="dc=example,dc=com" --update
-    [root@ipaclient ~]# authconfig --update --enablemkhomedir
-    [root@ipaclient ~]# authconfig --test
+    authconfig --enableforcelegacy --update
+    authconfig --enableldap --enableldapauth --ldapserver="ipaserver.example.com" --ldapbasedn="dc=example,dc=com" --update
+    authconfig --update --enablemkhomedir
+    authconfig --test
+
+Test the authentication:
+
+    getent passwd leonardo
 
 Try authenticating with an user:
 

@@ -21,6 +21,9 @@ Vagrant.configure("2") do |config|
 192.168.33.11 ipaclient.example.com ipaclient
 EOF
 
+      echo 'provaleonardo' | passwd --stdin
+      echo 'provaleonardo' | passwd vagrant --stdin
+
       yum update -y
       yum install -y sssd autofs
       systemctl enable autofs sssd-autofs
