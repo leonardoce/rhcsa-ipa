@@ -10,6 +10,13 @@ manually for certain things.
     vagrant up
     vagrant ssh
 
+You can login to the IPA server with 'admin' and password 'adminipa'.
+
+## Manual procedure
+
+*IMPORTANT*: This is not needed anymore since it has been automatized in the
+Vagrantfile.
+
 You can setup the IPA server using the tools from RedHat like in the following
 procedure:
 

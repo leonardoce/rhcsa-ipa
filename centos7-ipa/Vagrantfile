@@ -25,5 +25,26 @@ EOF
 
       yum update -y
       yum install -y ipa-server bind bind-dyndb-ldap ipa-server-dns
+
+      # Install IPA Server
+      ipa-server-install -p mypassword -a adminipa -n example.com -r EXAMPLE.COM \
+        --setup-kra --setup-dns --forwarder=8.8.8.8 --hostname=ipaserver.example.com \
+        --auto-reverse -U
+
+      # NFS Server setup
+      yum install -y nfs-utils
+      systemctl enable rpcbind
+      systemctl enable nfs-server
+      systemctl enable nfs-lock
+      systemctl enable nfs-idmap
+      systemctl start rpcbind
+      systemctl start nfs-server
+      systemctl start nfs-lock
+      systemctl start nfs-idmap
+
+      cat > /etc/exports <<EOF
+/home            *(rw,sync,no_root_squash,no_all_squash)
+EOF
+      systemctl restart nfs-server
   SHELL
 end
