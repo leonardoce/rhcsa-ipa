@@ -170,3 +170,53 @@ TBD
 - https://www.certdepot.net/ldap-client-configuration-authconfig/
 - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Reference_Guide/s2-nfs-client-config-autofs.html
 - https://www.howtoforge.com/nfs-server-and-client-on-centos-7
+
+
+## autofs configs
+
+/etc/auto.home
+
+```
+* -fstype=nfs4 ipaserver.example.com:/home/&
+```
+
+/etc/auto.master
+
+```
+#
+# Sample auto.master file
+# This is a 'master' automounter map and it has the following format:
+# mount-point [map-type[,format]:]map [options]
+# For details of the format look at auto.master(5).
+#
+/misc	/etc/auto.misc
+#
+# NOTE: mounts done from a hosts map will be mounted with the
+#	"nosuid" and "nodev" options unless the "suid" and "dev"
+#	options are explicitly given.
+#
+/net	-hosts
+#
+/home	/etc/auto.home
+# Include /etc/auto.master.d/*.autofs
+# The included files must conform to the format of this file.
+#
++dir:/etc/auto.master.d
+#
+# Include central master map if it can be found using
+# nsswitch sources.
+#
+# Note that if there are entries for /net or /misc (as
+# above) in the included master map any keys that are the
+# same will not be seen as the first read key seen takes
+# precedence.
+#
++auto.master
+```
+
+/etc/autofs.conf
+
+```
+# logging - set default log level "none", "verbose" or "debug"
+# logging = debug
+```
